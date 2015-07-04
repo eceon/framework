@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wire>
+    <services>
+        
+        <!-- REQUEST -->
+        <service id="app.request" class="Eceon\Request\HTTP">
+        </service>
+
+        <!-- RESPONSE -->
+        <service id="app.response" class="Eceon\Response\HTTP">
+        </service>        
+
+
+
+         <!-- DISPATCHER -->
+        <service id="app.dispatcher" class="Eceon\MVC\Dispatcher\ModuleDispatcher">
+            <call method="setDiContainer">
+                <argument type="service" id="app.di.container" />
+            </call>
+        </service>
+
+
+        <!-- PLUGIN HELPER-->
+        <service id="app.plugin.manager" class="Eceon\Plugin\Manager"></service>
+
+
+        
+        <!-- ROUTING -->
+        <service id="app.router.route.default" class="Eceon\Router\Route\Simple">
+            <call method="construct">
+                <argument type="string" value="/{module}/{controller}/{action}" />
+            </call>
+        </service>        
+        
+        <service id="app.router" class="Eceon\Router\HTTP">
+            <call method="addRoute">
+                <argument type="service" id="app.router.route.default" />
+            </call>
+        </service>
+
+        
+        <!-- FRONTCONTROLLER -->
+        <service id="app.frontcontroller" class="Eceon\MVC\Controller\Front">
+            <call method="setDispatcher">
+                <argument type="service" id="app.dispatcher" />
+            </call>
+            <call method="setPluginManager">
+                <argument type="service" id="app.plugin.manager" />
+            </call>
+            <call method="setRouter">
+                <argument type="service" id="app.router" />
+            </call>
+        </service>
+
+
+        <!-- MODEL LAYER -->
+        <service id="app.model.form.factory" class="Eceon\MVC\Model\Form\Factory">
+            <call method="setDiContainer">
+                <argument type="service" id="app.di.container" />
+            </call>
+        </service>
+        
+        <service id="app.model.datamapper.factory" class="Eceon\MVC\Model\DataMapper\Factory">
+            <call method="setDiContainer">
+                <argument type="service" id="app.di.container" />
+            </call>
+        </service>
+
+        <service id="app.model.domainobject.factory" class="Eceon\MVC\Model\DomainObject\Factory">
+            <call method="setDiContainer">
+                <argument type="service" id="app.di.container" />
+            </call>
+        </service>
+
+        <service id="app.model.service.factory" class="Eceon\MVC\Model\Service\Factory">
+            <call method="setDiContainer">
+                <argument type="service" id="app.di.container" />
+            </call>
+        </service>
+
+                                                
+        
+        
+        <!-- VIEW HELPER MANAGER -->
+        <service id="app.view.helper.manager" class="Eceon\MVC\View\Helper\Manager"></service>
+                
+        <!-- CONTROLLER HELPERS -->
+        <service id="app.controller.helper.manager" class="Eceon\MVC\Controller\Helper\Manager"></service>
+        
+        
+        
+        
+        
+        
+        <!-- DATABASE CONNECTION -->
+        <service id="app.database.connection" class="Eceon\Database\Driver\Mysqli">
+            <call method="construct">
+                <argument type="parameter" id="connection.host" />
+                <argument type="parameter" id="connection.user" />
+                <argument type="parameter" id="connection.password" />
+                <argument type="parameter" id="connection.database" />
+            </call>
+        </service>
+    
+    </services>    
+</wire>    
