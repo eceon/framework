@@ -44,13 +44,13 @@
          */
         public function execute( $pAction, InterfaceRequest $pRequest )
         {
-            if( is_callable( array( $this, 'action' . $pAction ) ) === false )
+            if( is_callable( array( $this, $pAction . 'Action' ) ) === false )
             {
-                throw new \Exception( 'Cannot find command ' . $pAction . ' in ' . get_class( $this ) );
+                throw new \Exception( 'Cannot find command ' . $pAction . 'Action in ' . get_class( $this ) );
             }
             
             // execute function
-            call_user_func( array( $this, 'action' . $pAction ), $pRequest );
+            call_user_func( array( $this, $pAction . 'Action' ), $pRequest );
         }
         
         
