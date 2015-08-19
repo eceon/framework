@@ -10,31 +10,30 @@
 
     namespace Eceon\MVC\Controller;
 
-    use Eceon\MVC\Model\Service\Factory as ServiceFactory;
+    use Eceon\MVC\Model\Service\InterfaceService;
     use Eceon\MVC\View\InterfaceView;
     use Eceon\Request\InterfaceRequest;
     
     abstract class AbstractController implements InterfaceController
     {
         /**
-         * @var ServiceFactory
+         * @var Helper\InterfaceHelper[]
          */
-        protected $objServiceFactory = null;
+        protected $arrHelper = array();
+        
+        /**
+         * @var InterfaceService[]
+         */
+        protected $arrService = array();
         
         /**
          * @var InterfaceView
          */
         protected $objView = null;
         
-        /**
-         * @var Helper\Manager
-         */
-        protected $objHelperManager = null;
         
         
-        
-        
-    
+
         /**
          * Executes the given request object
          * 
@@ -54,32 +53,98 @@
         }
         
         
+        
+        /**
+         * Magic call function, use for helpers
+         * 
+         * @param string $pName
+         * @param string $pParams
+         * @return mixed
+         */
+        public function __call( $pName, $pParams )
+        {
+            if( $this->getHelperManager() !== null )
+            {
+                $helper = $this->getHelperManager()->getHelper( $pName );
 
+                if( $helper !== null )
+                {
+                    return call_user_func_array( array($helper, 'helper'), $pParams);
+                }
+            }
+        }        
         
         
-        
+
         /**
-         * Sets the ServiceFactory
+         * Adds a helper to this controller
          * 
-         * @param ServiceFactory $pFactory
+         * @param string $pName
+         * @param Helper\InterfaceHelper $pHelper
          */
-        public function setServiceFactory( ServiceFactory $pFactory )
+        public function addHelper( $pName, Helper\InterfaceHelper $pHelper)
         {
-            $this->objServiceFactory = $pFactory;
+            $this->arrHelper[$pName] = $pHelper;
         }
         
-        
         /**
-         * Get the ServiceFactory
+         * Gets the helper based on the given name. Throws an exception if the
+         * helper is not found
          * 
-         * @return ServiceFactory
+         * @param string $pName
+         * @return Helper\InterfaceHelper
+         * @throws \Exception
          */
-        protected function getServiceFactory()
+        public function getHelper( $pName )
         {
-            return $this->objServiceFactory;
+            if( isset( $this->arrHelper[$pName] ) === false )
+            {
+                throw new \Exception( 'ControllerHelper ' .$pName . ' not found!' );
+            }
+            
+            return $this->arrHelper[$pName];
         }
         
+        /**
+         * @see getHelper()
+         * @param string $pName
+         * @return Helper\InterfaceHelper
+         */
+        public function helper( $pName )
+        {
+            return $this->getHelper( $pName );
+        }
         
+                
+        
+
+        /**
+         * Adds a service to this controller
+         * 
+         * @param string $pName
+         * @param InterfaceService $pService
+         */
+        public function addService( $pName, InterfaceService $pService)
+        {
+            $this->arrService[$pName] = $pService;
+        }
+        
+        /**
+         * Gets the service based on the given name. return null if the service
+         * is not found
+         * 
+         * @param string $pName
+         * @return InterfaceService|null
+         */
+        public function getService( $pName )
+        {
+            if( isset( $this->arrService[$pName] ) === false )
+            {
+                return null;
+            }
+            
+            return $this->arrService[$pName];
+        }
         
         
         
@@ -114,63 +179,11 @@
             return $this->objView;
         }
         
+      
         
-        
-        
-        /**
-         * Sets the helper manager
-         * 
-         * @param Helper\Manager $pManager
-         */
-        public function setHelperManager( Helper\Manager $pManager ) 
-        {
-            $this->objHelperManager = $pManager;
-        }
-        
-        /**
-         * 
-         * @return Helper\Manager
-         */
-        public function getHelperManager()
-        {
-            return $this->objHelperManager;
-        }
-        
-        
-        
-        
-        /**
-         * Magic call function, use for helpers
-         * 
-         * @param string $pName
-         * @param string $pParams
-         * @return mixed
-         */
-        public function __call( $pName, $pParams )
-        {
-            if( $this->getHelperManager() !== null )
-            {
-                $helper = $this->getHelperManager()->getHelper( $pName );
 
-                if( $helper !== null )
-                {
-                    return call_user_func_array( array($helper, 'helper'), $pParams);
-                }
-            }
-        }
         
         
-        
-        /**
-         * @see getHelperManager->getHelper()
-         * @param string $pName
-         * @return Helper\InterfaceHelper
-         */
-        public function helper( $pName )
-        {
-            return $this->getHelperManager()->getHelper( $pName );
-        }
-        
-        
+
 
     }

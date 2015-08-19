@@ -10,96 +10,27 @@
     
     namespace Eceon\MVC\Model\Service;
     
-    use Eceon\MVC\Model\DataMapper\Factory as DataMapperFactory;
-    use Eceon\MVC\Model\DomainObject\Factory as DomainObjectFactory;
-    use Eceon\MVC\Model\Form\Factory as FormFactory;
+    use Eceon\MVC\Model\DataMapper\InterfaceDataMapper;
+    use Eceon\MVC\Model\DomainObject\InterfaceDomainObject;
+    use Eceon\MVC\Model\Form\InterfaceForm;
     
     
     abstract class AbstractService implements InterfaceService
     {
         
         /**
-         * @var DataMapperFactory
+         * @var InterfaceDataMapper[]
          */
-        protected $objDataMapperFactory = null;
+        protected $arrDataMapper = array();
 
         /**
-         * @var DomainObjectFactory 
+         * @var InterfaceDomainObject[]
          */
-        protected $objDomainObjectFactory = null;
+        protected $arrDomainObject = array();
         
         /**
-         * @var FormFactory
+         * @var InterfaceForm[]
          */
-        protected $objFormFactory = null;
-        
-        
-        
-        
-        
-        /**
-         * Sets a DataMapperFactory to the Service
-         * 
-         * @param DataMapperFactory $pFactory
-         */
-        public function setDataMapperFactory( DataMapperFactory $pFactory )
-        {
-            $this->objDataMapperFactory = $pFactory;
-        }
-        
-        /**
-         * Gets the DataMapper Factory
-         * 
-         * @return DataMapperFactory
-         */
-        protected function getDataMapperFactory()
-        {
-            return $this->objDataMapperFactory;
-        }        
-        
-
-        
-
-        /**
-         * Sets a domainObjectFactory to the Service
-         * 
-         * @param DomainObjectFactory $pFactory
-         */
-        public function setDomainObjectFactory( DomainObjectFactory $pFactory )
-        {
-            $this->objDomainObjectFactory = $pFactory;
-        }
-        
-        /**
-         * Gets the domainObject Factory
-         * 
-         * @return DomainObjectFactory
-         */
-        protected function getDomainObjectFactory()
-        {
-            return $this->objDomainObjectFactory;
-        }        
-        
-        
-        
-        /**
-         * Sets a FormFactory object to the Service
-         * 
-         * @param FormFactory $pFactory
-         */
-        public function setFormFactory( FormFactory $pFactory )
-        {
-            $this->objFormFactory = $pFactory;
-        }
-        
-        /**
-         * Gets the Form Factory
-         * 
-         * @return FormFactory
-         */
-        protected function getFormFactory()
-        {
-            return $this->objFormFactory;
-        }
+        protected $arrForm = array();
         
     }

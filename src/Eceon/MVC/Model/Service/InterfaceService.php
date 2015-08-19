@@ -10,38 +10,7 @@
 
     namespace Eceon\MVC\Model\Service;
     
-    use Eceon\MVC\Model\DataMapper\Factory as DataMapperFactory;
-    use Eceon\MVC\Model\DomainObject\Factory as DomainObjectFactory;
-    use Eceon\MVC\Model\Form\Factory as FormFactory;
 
-    
     interface InterfaceService
     {
-        
-        /**
-         * Sets a DataMapperFactory to the Service
-         * 
-         * @param DataMapperFactory $pFactory
-         */
-        public function setDataMapperFactory( DataMapperFactory $pFactory );
-        
-       
-
-        /**
-         * Sets a domainObjectFactory to the Service
-         * 
-         * @param DomainObjectFactory $pFactory
-         */
-        public function setDomainObjectFactory( DomainObjectFactory $pFactory );
-
-      
-        
-        /**
-         * Sets a FormFactory object to the Service
-         * 
-         * @param FormFactory $pFactory
-         */
-        public function setFormFactory( FormFactory $pFactory );
-        
-        
     }

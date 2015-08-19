@@ -10,7 +10,7 @@
 
     namespace Eceon\MVC\View;
 
-    use Eceon\MVC\Model\Service\Factory as ServiceFactory;
+    use Eceon\MVC\Model\Service\InterfaceService;
     use Eceon\Response\InterfaceResponse;
     use Eceon\MVC\View\Form\InterfaceForm;
     
@@ -24,9 +24,9 @@
         
         
         /**
-         * @var ServiceFactory
+         * @var InterfaceService[]
          */
-        protected $objServiceFactory = null;
+        protected $arrServices = array();
 
         
         /**
@@ -44,7 +44,7 @@
         /**
          * @var Helper\InterfaceHelper 
          */
-        protected $objHelperManager = null;
+        protected $arrHelpers = array();
         
      
         /**
