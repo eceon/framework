@@ -12,5 +12,5 @@
 
     interface InterfaceHelper
     {
-        
+        public function helper();
     }

@@ -43,15 +43,24 @@
          */
         public function execute( $pAction, InterfaceRequest $pRequest )
         {
-            if( is_callable( array( $this, $pAction . 'Action' ) ) === false )
+            $actionName = $pAction . 'Action';
+            
+            if( method_exists( $this, $actionName ) === false || is_callable( array( $this, $actionName ) ) === false  )
             {
-                throw new \Exception( 'Cannot find command ' . $pAction . 'Action in ' . get_class( $this ) );
+                throw new \Exception( 'Cannot find command ' . $actionName . ' in ' . get_class( $this ) );
             }
             
             // execute function
-            call_user_func( array( $this, $pAction . 'Action' ), $pRequest );
+            call_user_func( array( $this, $actionName ), $pRequest );
         }
         
+
+        /**
+         * test action. 
+         * 
+         * @return boolean
+         */
+        public function testAction(){}
         
         
         /**
@@ -63,15 +72,14 @@
          */
         public function __call( $pName, $pParams )
         {
-            if( $this->getHelperManager() !== null )
+            $helper = $this->getHelper( $pName );
+            
+            if( $helper === null )
             {
-                $helper = $this->getHelperManager()->getHelper( $pName );
-
-                if( $helper !== null )
-                {
-                    return call_user_func_array( array($helper, 'helper'), $pParams);
-                }
+                throw new \Exception( 'ControllerHelper ' .$pName . ' not found!' );
             }
+            
+            return call_user_func_array( array($helper, 'helper'), $pParams);
         }        
         
         
@@ -99,7 +107,7 @@
         {
             if( isset( $this->arrHelper[$pName] ) === false )
             {
-                throw new \Exception( 'ControllerHelper ' .$pName . ' not found!' );
+                return null;
             }
             
             return $this->arrHelper[$pName];
