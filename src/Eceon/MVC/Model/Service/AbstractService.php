@@ -11,8 +11,6 @@
     namespace Eceon\MVC\Model\Service;
     
     use Eceon\MVC\Model\DataMapper\InterfaceDataMapper;
-    use Eceon\MVC\Model\DomainObject\InterfaceDomainObject;
-    use Eceon\MVC\Model\Form\InterfaceForm;
     
     
     abstract class AbstractService implements InterfaceService
@@ -23,14 +21,36 @@
          */
         protected $arrDataMapper = array();
 
-        /**
-         * @var InterfaceDomainObject[]
-         */
-        protected $arrDomainObject = array();
+        
         
         /**
-         * @var InterfaceForm[]
+         * Adds a DataMapper to the services
+         * 
+         * @param string $pName
+         * @param InterfaceDataMapper $pDataMapper
          */
-        protected $arrForm = array();
+        public function addDataMapper( $pName, InterfaceDataMapper $pDataMapper )
+        {
+            $this->arrDataMapper[$pName] = $pDataMapper;
+        }
+        
+        /**
+         * Gets a DataMapper. Returns null if the requested datamapper is not 
+         * set
+         * 
+         * @param string $pName
+         * @return InterfaceDataMapper
+         */
+        public function getDataMapper( $pName )
+        {
+            if( isset( $this->arrDataMapper[$pName] ) === false )
+            {
+                return null;
+            }
+            
+            return $this->arrDataMapper[$pName];
+        }
+        
+
         
     }
