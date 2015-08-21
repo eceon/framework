@@ -4,7 +4,6 @@
      *
      * @author Ted van Diepen (t.v.diepen@mezio.nl)
      * @copyright Copyright (c) 2012-2014 Mezio (http://www.mezio.nl)
-     * @version $Id: AbstractController.php 359 2015-06-02 09:37:25Z ted $
      * $package Eceon/MVC/Controller
      */
 
@@ -12,9 +11,9 @@
 
     use Eceon\MVC\Model\Service\InterfaceService;
     use Eceon\MVC\View\InterfaceView;
-    use Eceon\Request\InterfaceRequest;
+
     
-    abstract class AbstractController implements InterfaceController
+    abstract class AbstractAction implements InterfaceAction
     {
         /**
          * @var Helper\InterfaceHelper[]
@@ -31,38 +30,8 @@
          */
         protected $objView = null;
         
-        
-        
 
-        /**
-         * Executes the given request object
-         * 
-         * @param string $pAction
-         * @param InterfaceRequest $pRequest
-         * @throws Exception 
-         */
-        public function execute( $pAction, InterfaceRequest $pRequest )
-        {
-            $actionName = $pAction . 'Action';
-            
-            if( method_exists( $this, $actionName ) === false || is_callable( array( $this, $actionName ) ) === false  )
-            {
-                throw new \Exception( 'Cannot find command ' . $actionName . ' in ' . get_class( $this ) );
-            }
-            
-            // execute function
-            call_user_func( array( $this, $actionName ), $pRequest );
-        }
-        
 
-        /**
-         * test action. 
-         * 
-         * @return boolean
-         */
-        public function testAction(){}
-        
-        
         /**
          * Magic call function, use for helpers
          * 
@@ -76,7 +45,7 @@
             
             if( $helper === null )
             {
-                throw new \Exception( 'ControllerHelper ' .$pName . ' not found!' );
+                throw new \Exception( 'ActionHelper ' .$pName . ' not found!' );
             }
             
             return call_user_func_array( array($helper, 'helper'), $pParams);
