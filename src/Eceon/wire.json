@@ -1,0 +1,162 @@
+{
+    "app.request": {
+        "class": "Eceon\\Request\\HTTP"
+    },
+    "app.response": {
+        "class": "Eceon\\Response\\HTTP"
+    },
+    "app.dispatcher": {
+        "class": "Eceon\\MVC\\Dispatcher\\ModuleDispatcher",
+        "method": {
+            "setDiContainer": {
+                "argument": [
+                    {
+                        "id": "app.di.container",
+                        "type": "service"
+                    }
+                ]
+            }
+        }
+    },
+    "app.plugin.manager": {
+        "class": "Eceon\\Plugin\\Manager"
+    },
+    "app.router.route.default": {
+        "class": "Eceon\\Router\\Route\\Simple",
+        "method": {
+            "construct": {
+                "argument": [
+                    {
+                        "value": "\/{module}\/{controller}\/{action}",
+                        "type": "string"
+                    }
+                ]
+            }
+        }
+    },
+    "app.router": {
+        "class": "Eceon\\Router\\HTTP",
+        "method": {
+            "addRoute": {
+                "argument": [
+                    {
+                        "id": "app.router.route.default",
+                        "type": "service"
+                    }
+                ]
+            }
+        }
+    },
+    "app.frontcontroller": {
+        "class": "Eceon\\MVC\\Controller\\Front",
+        "method": {
+            "setDispatcher": {
+                "argument": [
+                    {
+                        "id": "app.dispatcher",
+                        "type": "service"
+                    }
+                ]
+            },
+            "setPluginManager": {
+                "argument": [
+                    {
+                        "id": "app.plugin.manager",
+                        "type": "service"
+                    }
+                ]
+            },
+            "setRouter": {
+                "argument": [
+                    {
+                        "id": "app.router",
+                        "type": "service"
+                    }
+                ]
+            }
+        }
+    },
+    "app.model.form.factory": {
+        "class": "Eceon\\MVC\\Model\\Form\\Factory",
+        "method": {
+            "setDiContainer": {
+                "argument": [
+                    {
+                        "id": "app.di.container",
+                        "type": "service"
+                    }
+                ]
+            }
+        }
+    },
+    "app.model.datamapper.factory": {
+        "class": "Eceon\\MVC\\Model\\DataMapper\\Factory",
+        "method": {
+            "setDiContainer": {
+                "argument": [
+                    {
+                        "id": "app.di.container",
+                        "type": "service"
+                    }
+                ]
+            }
+        }
+    },
+    "app.model.domainobject.factory": {
+        "class": "Eceon\\MVC\\Model\\DomainObject\\Factory",
+        "method": {
+            "setDiContainer": {
+                "argument": [
+                    {
+                        "id": "app.di.container",
+                        "type": "service"
+                    }
+                ]
+            }
+        }
+    },
+    "app.model.service.factory": {
+        "class": "Eceon\\MVC\\Model\\Service\\Factory",
+        "method": {
+            "setDiContainer": {
+                "argument": [
+                    {
+                        "id": "app.di.container",
+                        "type": "service"
+                    }
+                ]
+            }
+        }
+    },
+    "app.view.helper.manager": {
+        "class": "Eceon\\MVC\\View\\Helper\\Manager"
+    },
+    "app.controller.helper.manager": {
+        "class": "Eceon\\MVC\\Controller\\Helper\\Manager"
+    },
+    "app.database.connection": {
+        "class": "Eceon\\Database\\Driver\\Mysqli",
+        "method": {
+            "construct": {
+                "argument": [
+                    {
+                        "value": "",
+                        "type": "string"
+                    },
+                    {
+                        "value": "",
+                        "type": "string"
+                    },
+                    {
+                        "value": "",
+                        "type": "string"
+                    },
+                    {
+                        "value": "",
+                        "type": "string"
+                    }
+                ]
+            }
+        }
+    }
+}

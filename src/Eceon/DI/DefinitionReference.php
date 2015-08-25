@@ -4,18 +4,17 @@
      *
      * @author Ted van Diepen (t.v.diepen@mezio.nl)
      * @copyright Copyright (c) 2012-2014 Mezio (http://www.mezio.nl)
-     * @version $Id: ParameterReference.php 96 2015-01-08 21:37:04Z ted $
      * $package Eceon/DI
      */
 
     namespace Eceon\DI;
     
-    class ParameterReference 
+    class DefinitionReference 
     {
         protected $strID = '';
         
         /**
-         * Constructor, sets reference id of the parameter
+         * Constructor, sets reference id of the definition
          * 
          * @param string $pID
          */
@@ -32,5 +31,5 @@
         public function getID()
         {
             return $this->strID;
-        }        
+        }
     }

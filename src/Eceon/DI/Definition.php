@@ -13,13 +13,6 @@
     class Definition
     {
         /**
-         * The id string of this definition
-         * 
-         * @var string
-         */
-        protected $strID = '';
-        
-        /**
          * The classname of this service
          *
          * @var string
@@ -45,24 +38,14 @@
         /**
          * Constructor
          * 
-         * @param string $pID
          * @param string $pClassName
          */
-        public function __construct( $pID, $pClassName )
+        public function __construct( $pClassName )
         {
-            $this->strID = strtolower( $pID );
             $this->strClassName = $pClassName;
         }
         
-        /**
-         * Gets the id string of this definition
-         * 
-         * @return string
-         */
-        public function getID()
-        {
-            return $this->strID;
-        }
+ 
         
         /**
          * Gets the class name of the service
@@ -73,6 +56,7 @@
         {
             return $this->strClassName;
         }
+        
         
         
         /**
@@ -111,21 +95,44 @@
             return $this->arrConstructArgument;
         }
         
+        /**
+         * Return true if this definition has construct arguments
+         * 
+         * @return boolean
+         */
+        public function hasConstructArguments()
+        {
+            return count( $this->arrConstructArgument ) > 0;
+        }
+        
+        
+        
+        
         
         /**
          * Adds a method that will be called upon creating the class
          * 
          * @param string $pMethodName
-         * @param string[] $pParameters
+         * @param string[] $pArguments
          * @return Definition
          */
-        public function addMethodCall( $pMethodName, $pParameters = array() )
+        public function addMethodCall( $pMethodName, $pArguments = array() )
         {
-            $this->arrMethodCall[] = array( 'method' => $pMethodName, 'parameter' => $pParameters );
+            $this->arrMethodCall[] = array( 
+                'method' => $pMethodName, 
+                'arguments' => $pArguments 
+            );
             
             return $this;
         }
 
+        public function setMethodCalls( $pMethodCalls = array() )
+        {
+            $this->arrMethodCall = $pMethodCalls;
+        }
+        
+        
+        
         /**
          * Gets the complete array of method's that will be called upon creating the class
          * 
@@ -135,4 +142,6 @@
         {
             return $this->arrMethodCall;
         }        
-    }
+        
+        
+    } 

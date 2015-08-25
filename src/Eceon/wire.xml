@@ -27,9 +27,9 @@
         
         <!-- ROUTING -->
         <service id="app.router.route.default" class="Eceon\Router\Route\Simple">
-            <call method="construct">
+            <construct>
                 <argument type="string" value="/{module}/{controller}/{action}" />
-            </call>
+            </construct>
         </service>        
         
         <service id="app.router" class="Eceon\Router\HTTP">
@@ -91,16 +91,6 @@
         
         
         
-        
-        <!-- DATABASE CONNECTION -->
-        <service id="app.database.connection" class="Eceon\Database\Driver\Mysqli">
-            <call method="construct">
-                <argument type="parameter" id="connection.host" />
-                <argument type="parameter" id="connection.user" />
-                <argument type="parameter" id="connection.password" />
-                <argument type="parameter" id="connection.database" />
-            </call>
-        </service>
     
     </services>    
 </wire>    
